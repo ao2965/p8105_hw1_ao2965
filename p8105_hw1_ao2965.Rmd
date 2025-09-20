@@ -10,18 +10,30 @@ library(moderndive)
 data("early_january_weather")
 ```
 The variables are as follows:
-- origin: Weather station. Named origin to facilitate merging with nycflights13::flights data.
-- year, month, day, hour: Time of recording.
-- temp, dewp: Temperature and dewpoint in F.
-- humid: Relative humidity.
-- wind_dir, wind_speed, wind_gust: Wind direction (in degrees), speed and gust speed (in mph).
-- precip: Precipitation, in inches.
-- pressure: Sea level pressure in millibars.
-- visib: Visibility in miles.
-- time_hour: Date and hour of the recording as a POSIXct date.
-- The mean temperature is `r mean(early_january_weather$temp)` °F. 
-- This dataset has `r nrow(early_january_weather)` rows.
-- This dataset has `r ncol(early_january_weather)` columns.
+
+* origin: Weather station. Named origin to facilitate merging with nycflights13::flights data.
+
+* year, month, day, hour: Time of recording.
+
+* temp, dewp: Temperature and dewpoint in F.
+
+* humid: Relative humidity.
+
+* wind_dir, wind_speed, wind_gust: Wind direction (in degrees), speed and gust speed (in mph).
+
+* precip: Precipitation, in inches.
+
+* pressure: Sea level pressure in millibars.
+
+* visib: Visibility in miles.
+
+* time_hour: Date and hour of the recording as a POSIXct date.
+
+* The mean temperature is `r mean(early_january_weather$temp)` °F. 
+
+* This dataset has `r nrow(early_january_weather)` rows.
+
+* This dataset has `r ncol(early_january_weather)` columns.
 
 
 ```{r}
@@ -34,7 +46,7 @@ ggplot(early_january_weather, aes(x = time_hour, y = temp,color = humid)) + geom
 ```
 
 
-The pattern of the scatterplot shows that as time goes by, temperature is seen to be increasing. The plot also shows that humididty is recorded to be increasing with time. there is a period of time around Jan 14 when humidity is recorded to be higher than usual. 
+The pattern of the scatterplot shows that as time goes by, temperature is seen to be increasing. The plot also shows that humidity is recorded to be increasing with time. There is a period of time around Jan 14 when humidity is recorded to be higher than usual. 
 ```{r}
 ggsave("scatter_plot.pdf", height = 4, width = 6)
 ```
@@ -74,7 +86,7 @@ mean(pull(q2_df, q2_vec))
 
 We could not find the mean for a character vector of length 10 and a factor vector of 
 length 10, with 3 different factor “levels”. This is because means only work for numerical values.
-```{r}
+```{r results= 'hide', warning=FALSE}
 as.numeric(q2_df %>% pull(q2_log))  
 as.numeric(q2_df %>% pull(q2_chr))  
 as.numeric(q2_df %>% pull(q2_vec))
