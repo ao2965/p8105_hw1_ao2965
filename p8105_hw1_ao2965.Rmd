@@ -5,7 +5,7 @@ date: "2025-09-19"
 ---
 
 
-
+1.
 ```{r}
 library(moderndive)
 data("early_january_weather")
@@ -31,3 +31,49 @@ The mean temperature is `r mean(early_january_weather$temp)` °F.
 This dataset has `r nrow(early_january_weather)` rows and `r ncol(early_january_weather)` columns.
 
 The pattern of the scatterplot shows that as time goes by, temperature is seen to be increasing. The plot also shows that humididty is recorded to be increasing with time. there is a period of time around Jan 14 when humidity is recorded to be higher than usual. 
+
+2.
+
+```{r}
+library(tidyverse)
+set.seed(1234)
+q2_df = tibble(
+  q2_num = rnorm(10),                                    
+  q2_log = q2_num > 0,                                   
+  q2_chr = c("apple","banana","cherry","grape","blueberry","blackberry", "strawberry", "rasberry", "mango", "kiwi"), # character
+  q2_vec = factor(rep(c("high", "medium", "low"), length.out = 10))      
+)
+q2_df
+```
+
+```{r}
+mean(q2_df$q2_num)
+
+```
+
+The mean for the random sample of size 10 from a standard Normal distribution was -0.3831574
+
+```{r}
+mean(q2_df$q2_log)
+
+```
+
+The mean for logical vector indicating whether elements of the sample are greater than 0 was 0.4
+```{r}
+mean(q2_df$q2_chr)
+mean(q2_df$q2_vec)
+```
+
+We could not find the mean for a character vector of length 10 and a factor vector of 
+length 10, with 3 different factor “levels”. This is because means only work for numerical values.
+```{r}
+library(tidyverse)
+
+as.numeric(q2_df %>% pull(q2_log))  
+as.numeric(q2_df %>% pull(q2_chr))  
+as.numeric(q2_df %>% pull(q2_vec))
+
+```
+Logical variables, which contain TRUE and FALSE values, are internally stored as 1 and 0. So, converting logicals to numeric results in 1s and 0s, making it possible to calculate the mean as the proportion of TRUE values. Character variables consist of strings that do not represent numbers. Applying as.numeric() to these produces NA values with a warning because characters like fruit names cannot be meaningfully converted to numbers. Factor variables are categorical but internally stored as integer codes representing the factor levels. When converted to numeric, the codes will give mean, but it will give mean for the integer level codes. So, it would be meaningless.
+
+This explains why the mean function in R works directly on numeric and logical types but produces errors when applied to character or factor variables. It is also important to be careful of averaging mixed columns, or we will end up with misleading numbers.
