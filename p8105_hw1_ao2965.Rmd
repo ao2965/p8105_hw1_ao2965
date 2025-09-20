@@ -1,5 +1,6 @@
 ---
 title: "p8105_hw1_ao2965"
+author : Alissa Shams Orchi
 output: github_document
 date: "2025-09-19"
 ---
@@ -9,24 +10,25 @@ library(moderndive)
 data("early_january_weather")
 ```
 The variables are as follows:
-origin: Weather station. Named origin to facilitate merging with nycflights13::flights data.
-year, month, day, hour: Time of recording.
-temp, dewp: Temperature and dewpoint in F.
-humid: Relative humidity.
-wind_dir, wind_speed, wind_gust: Wind direction (in degrees), speed and gust speed (in mph).
-precip: Precipitation, in inches.
-pressure: Sea level pressure in millibars.
-visib: Visibility in miles.
-time_hour: Date and hour of the recording as a POSIXct date.
-The mean temperature is `r mean(early_january_weather$temp)` °F. 
-This dataset has `r nrow(early_january_weather)` rows and `r ncol(early_january_weather)` columns.
+- origin: Weather station. Named origin to facilitate merging with nycflights13::flights data.
+- year, month, day, hour: Time of recording.
+- temp, dewp: Temperature and dewpoint in F.
+- humid: Relative humidity.
+- wind_dir, wind_speed, wind_gust: Wind direction (in degrees), speed and gust speed (in mph).
+- precip: Precipitation, in inches.
+- pressure: Sea level pressure in millibars.
+- visib: Visibility in miles.
+- time_hour: Date and hour of the recording as a POSIXct date.
+- The mean temperature is `r mean(early_january_weather$temp)` °F. 
+- This dataset has `r nrow(early_january_weather)` rows.
+- This dataset has `r ncol(early_january_weather)` columns.
 
 
 ```{r}
 library(ggplot2)
 ggplot(early_january_weather, aes(x = time_hour, y = temp,color = humid)) + geom_point() + labs(
     title = "Temperature over Time (colored by Humidity)",
-    x = "Time (hourly)", y = "Temperature (°F)", color = "Humidity"
+    x = "time_hour", y = "temp", color = "Humidity"
   )
 
 ```
@@ -40,41 +42,39 @@ ggsave("scatter_plot.pdf", height = 4, width = 6)
 
 2.
 
-```{r}
+```{r message= FALSE}
 library(tidyverse)
 set.seed(1234)
 q2_df = tibble(
   q2_num = rnorm(10),                                    
   q2_log = q2_num > 0,                                   
-  q2_chr = c("apple","banana","cherry","grape","blueberry","blackberry", "strawberry", "rasberry", "mango", "kiwi"), # character
+  q2_chr = c("apple","banana","cherry","grape","blueberry","blackberry", "strawberry", "rasberry", "mango", "kiwi"), 
   q2_vec = factor(rep(c("high", "medium", "low"), length.out = 10))      
 )
 q2_df
 ```
 
 ```{r}
-mean(q2_df$q2_num)
+mean(pull(q2_df, q2_num))
 
 ```
 
 The mean for the random sample of size 10 from a standard Normal distribution was -0.3831574
 
 ```{r}
-mean(q2_df$q2_log)
+mean(pull(q2_df, q2_log))
 
 ```
 
 The mean for logical vector indicating whether elements of the sample are greater than 0 was 0.4
 ```{r}
-mean(q2_df$q2_chr)
-mean(q2_df$q2_vec)
+mean(pull(q2_df, q2_chr))
+mean(pull(q2_df, q2_vec))
 ```
 
 We could not find the mean for a character vector of length 10 and a factor vector of 
 length 10, with 3 different factor “levels”. This is because means only work for numerical values.
 ```{r}
-library(tidyverse)
-
 as.numeric(q2_df %>% pull(q2_log))  
 as.numeric(q2_df %>% pull(q2_chr))  
 as.numeric(q2_df %>% pull(q2_vec))
