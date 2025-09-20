@@ -4,18 +4,9 @@ output: github_document
 date: "2025-09-19"
 ---
 
-
-1.
 ```{r}
 library(moderndive)
 data("early_january_weather")
-library(ggplot2)
-ggplot(early_january_weather, aes(x = time_hour, y = temp,color = humid)) + geom_point() + labs(
-    title = "Temperature over Time (colored by Humidity)",
-    x = "Time (hourly)", y = "Temperature (°F)", color = "Humidity"
-  )
-ggsave("scatter_plot.pdf", height = 4, width = 6)
-
 ```
 The variables are as follows:
 origin: Weather station. Named origin to facilitate merging with nycflights13::flights data.
@@ -30,7 +21,22 @@ time_hour: Date and hour of the recording as a POSIXct date.
 The mean temperature is `r mean(early_january_weather$temp)` °F. 
 This dataset has `r nrow(early_january_weather)` rows and `r ncol(early_january_weather)` columns.
 
+
+```{r}
+library(ggplot2)
+ggplot(early_january_weather, aes(x = time_hour, y = temp,color = humid)) + geom_point() + labs(
+    title = "Temperature over Time (colored by Humidity)",
+    x = "Time (hourly)", y = "Temperature (°F)", color = "Humidity"
+  )
+
+```
+
+
 The pattern of the scatterplot shows that as time goes by, temperature is seen to be increasing. The plot also shows that humididty is recorded to be increasing with time. there is a period of time around Jan 14 when humidity is recorded to be higher than usual. 
+```{r}
+ggsave("scatter_plot.pdf", height = 4, width = 6)
+```
+
 
 2.
 
